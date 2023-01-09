@@ -6,7 +6,7 @@ titulo: .asciiz		"---- Torre de Hanói ----\nQuantidade de discos: "
 mover: .asciiz		"\nMove disco "
 de: .asciiz		" de "
 para: .asciiz		" para "
-error: .asciiz		" A quantidade deve ser maior que zero: "
+error: .asciiz		"A quantidade deve ser maior que zero: "
 
 .text
 	.globl main
