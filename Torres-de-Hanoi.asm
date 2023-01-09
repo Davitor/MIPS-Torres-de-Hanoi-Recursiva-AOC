@@ -6,26 +6,34 @@ titulo: .asciiz		"---- Torre de Hanói ----\nQuantidade de discos: "
 mover: .asciiz		"\nMove disco "
 de: .asciiz		" de "
 para: .asciiz		" para "
+error: .asciiz		" A quantidade deve ser maior que zero: "
 
 .text
 	.globl main
 main:
-
+    addi $t1, $zero, 1
     li $v0,  4          # print string
     la $a0,  titulo
     syscall
+    read:
     li $v0,  5          # leitura de int
     syscall
     move    $a0, $v0	# entrada em a0 (núm de discos)
-    li $a1, 'A'		# Pino A (origem)
-    li $a2, 'B'		# Pino B (destino)
-    li $a3, 'C'		# Pino C (aux)
+    blt	$a0, $t1, erro
+    li	$a1, 'A'		# Pino A (origem)
+    li	$a2, 'B'		# Pino B (destino)
+    li	$a3, 'C'		# Pino C (aux)
 
     jal hanoi           # chama funçao
 
-    li $v0, 10          # termina a execuçao do programa
+    li	$v0, 10          # termina a execuçao do programa
     syscall
-
+    
+    erro:
+	li $v0,  4              # print string
+        la $a0,  error
+        syscall
+        j read
 hanoi:
 
     addi $sp, $sp, -20	# Ajusta a pilha (stack) com espaço para 5 itens
